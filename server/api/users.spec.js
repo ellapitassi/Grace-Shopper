@@ -19,7 +19,7 @@ describe('User routes', () => {
         email: codysEmail
       })
     })
-
+    var len = -1;
     it('GET /api/users', () => {
       return request(app)
         .get('/api/users')
@@ -27,7 +27,9 @@ describe('User routes', () => {
         .then(res => {
           expect(res.body).to.be.an('array')
           expect(res.body[0].email).to.be.equal(codysEmail)
+          len = res.body.length;
         })
+//.get('/api/users/len+1') use for later
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')
