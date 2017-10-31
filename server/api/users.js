@@ -14,6 +14,7 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 })
 
+//Get All users by a given Teachable
 router.get('/:teachable/', (req, res, next) => {
   const teachable = req.params.teachable; //Assuming this is an id number? Also works if stored as string?
   User.findAll({ include: [{ model: Teachable }] })
