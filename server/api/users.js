@@ -31,7 +31,7 @@ router.post('/', (req, res, next) => {
   const info = req.body;
   User.create({
     name: info.name,
-    email: info.email,
+    email: info.email, //TODO: maybe add image later
     teachables: info.teachables //Make sure to send as array of objects in body
   },
     { include: [{ model: Teachable, as: "teachables"}]

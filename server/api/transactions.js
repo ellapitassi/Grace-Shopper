@@ -28,12 +28,17 @@ router.get('/:teachable/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
+    //buyer, tutor, cost, sessionTime, duration, rating, comments
   const info = req.body;
   Transactions.create({
-    
-    //Make sure to send as array of objects in body
-  },
-    { include: [{ all: true}]
+      buyer: info.buyer,
+      tutor: info.tutor,
+      cost: info.cost,
+      sessionTime: info.sessionTime,
+      duration: info.duration
+    },
+    {
+        include: [{ all: true }]
     }).then(transaction => res.status(200).json(transaction))
   .catch(next)
 })
