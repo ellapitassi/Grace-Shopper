@@ -1,14 +1,40 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const { User, Teachable } = require('../db/models');
 module.exports = router
 
 router.get('/', (req, res, next) => {
-  User.findAll({
-    // explicitly select only the id and email fields - even though
-    // users' passwords are encrypted, it won't help if we just
-    // send everything to anyone who asks!
-    attributes: ['id', 'email']
-  })
-    .then(users => res.json(users))
+  User.findAll({ include: [{ model: Teachable }] })
+    .then(users => res.status(200).json(users))
     .catch(next)
 })
+
+router.get('/:id', (req, res, next) => {
+  User.findById(req.params.id)
+    .then(user => res.status(200).json(user))
+    .catch(next);
+})
+
+//Get All users by a given Teachable
+router.get('/:teachable/', (req, res, next) => {
+  const teachable = req.params.teachable; //Assuming this is an id number? Also works if stored as string?
+  User.findAll({ include: [{ model: Teachable }] })
+    .then(users => {
+      var filteredUsers = users.filter(user => 
+        (user.getTeachables().indexOf(teachable) != -1) // teachables: [5, 3, 88], so indexOf(3) != -1
+      );
+      res.status(200).json(filteredUsers);
+    })
+    .catch(next);
+})
+
+router.post('/', (req, res, next) => {
+  const info = req.body;
+  User.create({
+    name: info.name,
+    email: info.email, //TODO: maybe add image later
+    teachables: info.teachables //Make sure to send as array of objects in body
+  },
+    { include: [{ model: Teachable, as: "teachables"}]
+    }).then(user => res.status(200).json(user))
+    .catch(next);
+  })
