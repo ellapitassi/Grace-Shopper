@@ -4,6 +4,6 @@ module.exports = router
 
 router.get('/', (req, res, next) => {
   Teachables.findAll({ include: [{ all: true }] })
-    .then(teachables => res.status(200).json(teachables))
+    .then(teachables => res.json(teachables))
     .catch(next)
 })

@@ -4,13 +4,13 @@ module.exports = router
 
 router.get('/', (req, res, next) => {
   User.findAll({ include: [{ model: Teachable }] })
-    .then(users => res.status(200).json(users))
+    .then(users => res.json(users))
     .catch(next)
 })
 
 router.get('/:id', (req, res, next) => {
   User.findById(req.params.id)
-    .then(user => res.status(200).json(user))
+    .then(user => res.json(user))
     .catch(next);
 })
 
@@ -22,19 +22,15 @@ router.get('/:teachable/', (req, res, next) => {
       var filteredUsers = users.filter(user => 
         (user.getTeachables().indexOf(teachable) != -1) // teachables: [5, 3, 88], so indexOf(3) != -1
       );
-      res.status(200).json(filteredUsers);
+      res.json(filteredUsers);
     })
     .catch(next);
 })
 
 router.post('/', (req, res, next) => {
   const info = req.body;
-  User.create({
-    name: info.name,
-    email: info.email, //TODO: maybe add image later
-    teachables: info.teachables //Make sure to send as array of objects in body
-  },
+  User.create(info,
     { include: [{ model: Teachable, as: "teachables"}]
-    }).then(user => res.status(200).json(user))
+    }).then(user => res.json(user))
     .catch(next);
   })
