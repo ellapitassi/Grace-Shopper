@@ -2,20 +2,15 @@ const router = require('express').Router()
 const { Transactions } = require('../db/models');
 module.exports = router
 
+//TESTED - WORKING
 router.get('/', (req, res, next) => {
   Transactions.findAll({ include: [{ all: true }] })
     .then(transaction => res.json(transaction))
     .catch(next)
 })
 
-router.get('/:id', (req, res, next) => {
-  Transactions.findById(req.params.id)
-    .then(transactions => res.json(transactions))
-    .catch(next);
-})
-
 //Get All Transactions by a given Teachable
-router.get('/:teachable/', (req, res, next) => {
+router.get('/teachable/:teachable/', (req, res, next) => {
   const teachable = req.params.teachable; //Assuming this is an id number? Also works if stored as string?
   Transactions.findAll({ include: [{ all: true }] })
     .then(transactions => {
@@ -27,6 +22,14 @@ router.get('/:teachable/', (req, res, next) => {
     .catch(next);
 })
 
+//TESTED - WORKING
+router.get('/:id', (req, res, next) => {
+  Transactions.findById(req.params.id)
+    .then(transactions => res.json(transactions))
+    .catch(next);
+})
+
+//TESTED - WORKING
 router.post('/', (req, res, next) => {
     //buyer, tutor, cost, sessionTime, duration, rating, comments
   const info = req.body;

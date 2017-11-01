@@ -7,7 +7,7 @@ Teachables.belongsToMany(User, {through: 'userTeachables'} )
 User.belongsToMany(Teachables, {through: 'userTeachables'} )
 Transactions.belongsTo(User, {as: 'buyer'} )
 Transactions.belongsTo(User, {as: 'tutor'} )
-Transactions.hasOne(Teachables)
+Transactions.belongsTo(Teachables) 
 
 module.exports = {
   User,
