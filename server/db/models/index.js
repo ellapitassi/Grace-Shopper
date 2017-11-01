@@ -1,4 +1,6 @@
 const User = require('./user')
+const Teachables = require('./teachables')
+const Transactions = require('./transactions')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -13,6 +15,17 @@ const User = require('./user')
  * for example, we can say: const {User} = require('../db/models')
  * instead of: const User = require('../db/models/user')
  */
+
+//Associations
+Teachables.belongsToMany(User, {through: 'userTeachables'} ) //export to then seed from?
+User.belongsToMany(Teachables, {through: 'userTeachables'} )
+Transactions.hasOne(User, {as: 'buyer'} )
+Transactions.hasOne(User, {as: 'tutor'} )
+Transactions.hasOne(Teachables)
+
 module.exports = {
-  User
+  User,
+  Teachables,
+  Transactions
 }
+
