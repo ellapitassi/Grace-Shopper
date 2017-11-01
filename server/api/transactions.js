@@ -4,13 +4,13 @@ module.exports = router
 
 router.get('/', (req, res, next) => {
   Transactions.findAll({ include: [{ all: true }] })
-    .then(transaction => res.status(200).json(transaction))
+    .then(transaction => res.json(transaction))
     .catch(next)
 })
 
 router.get('/:id', (req, res, next) => {
   Transactions.findById(req.params.id)
-    .then(transactions => res.status(200).json(transactions))
+    .then(transactions => res.json(transactions))
     .catch(next);
 })
 
@@ -22,7 +22,7 @@ router.get('/:teachable/', (req, res, next) => {
       var filteredTransactions = Transactions.filter(transaction => 
         (transaction.getTeachables().indexOf(teachable) != -1) // teachables: [5, 3, 88], so indexOf(3) != -1 //TODO: check the table 
       );
-      res.status(200).json(filteredTransactions);
+      res.json(filteredTransactions);
     })
     .catch(next);
 })
@@ -30,15 +30,9 @@ router.get('/:teachable/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     //buyer, tutor, cost, sessionTime, duration, rating, comments
   const info = req.body;
-  Transactions.create({
-      buyer: info.buyer,
-      tutor: info.tutor,
-      cost: info.cost,
-      sessionTime: info.sessionTime,
-      duration: info.duration
-    },
+  Transactions.create(info,
     {
         include: [{ all: true }]
-    }).then(transaction => res.status(200).json(transaction))
+    }).then(transaction => res.json(transaction))
   .catch(next)
 })
