@@ -17,7 +17,7 @@ const Transactions = require('./transactions')
  */
 
 //Associations
-Teachables.belongsToMany(User, {through: 'userTeachables'} ) //export to then seed from?
+Teachables.belongsToMany(User, {through: 'userTeachables'} )
 User.belongsToMany(Teachables, {through: 'userTeachables'} )
 Transactions.hasOne(User, {as: 'buyer'} )
 Transactions.hasOne(User, {as: 'tutor'} )
