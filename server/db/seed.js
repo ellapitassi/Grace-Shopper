@@ -1,3 +1,4 @@
+'use strict'
 var Promise = require("bluebird");
 var {
   User,
@@ -5,256 +6,65 @@ var {
   Transactions
 } = require('./models');
 var db = require('./index');
+var data = require('./data');
 
-var data = {
-  user: [
-    {
-    name: "Annelise Thorsen",
-    img: '/images/annelise.jpg',
-    email: "thorsen120@gmail.com",
-    password: "abc123",
-    rating: "5"
-    },
-    {
-    name: "Ella Pitassi",
-    img: '/images/ella.jpg',
-    email: "ellapitassi23@gmail.com",
-    password: "abc123",
-    rating: "5"
-    },
-    {
-    name: "Jennifer Neale",
-    img: '/images/jennifer.jpg',
-    email: "jeneale6@gmail.com",
-    password: "abc123",
-    rating: "5"
-    },
-    {
-    name: "Guang Zhu",
-    img: '/images/guang.jpg',
-    email: "bha.guang@gmail.com",
-    password: "abc123",
-    rating: "5"
-    },
-    {
-    name: "Anule Ndukwu",
-    img: '/images/anule.jpg',
-    email: "anule@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "April Rueb",
-    img: '/images/april.jpg',
-    email: "april@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Arianna Lanz",
-    img: '/images/arianna.jpg',
-    email: "arianna@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Ashi",
-    img: '/images/ashi.jpg',
-    email: "ashi@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Emily Intersimone",
-    img: '/images/emilyi.jpg',
-    email: "emilyi@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Blanca Sanchez",
-    img: '/images/blanca.jpg',
-    email: "blanca@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Cara Lang",
-    img: '/images/cara.jpg',
-    email: "cara@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Caryn McCarthy",
-    img: '/images/caryn.jpg',
-    email: "caryn@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Cecilia Chang",
-    img: '/images/cecilia.jpg',
-    email: "ceciliajaimie@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Christina Ng",
-    img: '/images/christina.jpg',
-    email: "christina@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Evlis Henry",
-    img: '/images/evlis.jpg',
-    email: "evlis@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Emily Jordan",
-    img: '/images/emily.jpg',
-    email: "emilyj@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Erica Chai",
-    img: '/images/erica.jpg',
-    email: "erica@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Joyce Ren",
-    img: '/images/joyce.jpg',
-    email: "joyce@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Keri Miller",
-    img: '/images/keri.jpg',
-    email: "keri@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Layla Hedges",
-    img: '/images/layla.jpg',
-    email: "layla@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Lina Morales",
-    img: '/images/lina.jpg',
-    email: "lina@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Maria Betances",
-    img: '/images/maria.jpg',
-    email: "maria@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Moyouri Bhattacharjee",
-    img: '/images/momo.jpg',
-    email: "momo@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Renee Sajedian",
-    img: '/images/renee.jpg',
-    email: "renee@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Samantha Zhang",
-    img: '/images/sam.jpg',
-    email: "sam@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Shannon Kendall",
-    img: '/images/shannon.jpg',
-    email: "shannon@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Shelby Rackley",
-    img: '/images/shelby.jpg',
-    email: "shelby@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Shiratie Prodhan",
-    img: '/images/shiratie.jpg',
-    email: "shiratie@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Priya Vaidyanath",
-    img: '/images/priya.jpg',
-    email: "priya@gmail.com",
-    password: "abc123",
-    rating: "4"
-    },
-    {
-    name: "Eleni Arvanitis",
-    img: '/images/eleni.jpg',
-    email: "eleni@gmail.com",
-    password: "abc123",
-    rating: "4"
-    }                                                    
-    ],
-  teachables: [
-    {
-    name: "React",
-    price: 10.00
-    },
-    {
-    name: "Redux",
-    price: 8.00
-    },
-    {
-    name: "Express",
-    price: 7.00
-    },
-    {
-    name: "Sequelize",
-    price: 5.00
-    }
-    ]
-  }
-    db.sync({ force: true })
-    .then(function() {
-      console.log("Dropped old data, now inserting data");
-      return Promise.map(Object.keys(data), function(name) {
-        return Promise.map(data[name], function(item) {
-          return db.model(name).create(item, {});
-        });
-      });
-    })
-    .then(function() {
-      console.log("Finished inserting data");
-    })
-    .catch(function(err) {
-      console.error("There was totally a problem", err, err.stack);
-    })
-    .finally(function() {
-      db.close(); 
-      console.log("connection closed");
-      return null;
-    });
+async function seed () {
+  await db.sync({ force: true })
+  const users = toObject(await Promise.map(data.user, (data => User.create(data))))
+  const teachables = toObject(await Promise.map(data.teachables, (data => Teachables.create(data))))
+  //const transactions = await Promise.map(data.transactions, (data => Transactions.create(data)))
+  const {'Annelise Thorsen': Annelise,'Ella Pitassi': Ella, 'Jennifer Neale': Jennifer, 'Guang Zhu': Guang, 'Anule Ndukwu': Anule, 'April Rueb': April, 'Arianna Lanz': Arianna, Ashi, 'Emily Intersimone': EmilyI, 'Blanca Sanchez': Blanca, 'Cara Lang': Cara, 'Caryn McCarthy': Caryn, 'Cecilia Chang': Cecilia, 'Christina Ng': Christina, 'Evlis Henry': Evlis, 'Emily Jordan': EmilyJ, 'Erica Chai': Erica, 'Joyce Ren': Joyce, 'Keri Miller': Keri, 'Layla Hedges': Layla, 'Lina Morales': Lina, 'Maria Betances': Maria, 'Moyouri Bhattacharjee': Momo, 'Renee Sajedian': Renee, 'Samantha Zhang': Sam, 'Shannon Kendall': Shannon, 'Shelby Rackley': Shelby, 'Shiratie Prodhan': Shiratie, 'Priya Vaidyanath': Priya, 'Eleni Arvanitis': Eleni} = users
+  const {React, Redux, Express, Sequelize, Crafting, Knitting, Writing, Reading, Numbers, Eating, Gaming, FullStack, ReactRedux, Feminism} = teachables
+  return Promise.all([
+    Ashi.setTeachables([FullStack, Writing, Feminism])
+  , Ella.setTeachables([Express, Eating, Feminism])
+  , Annelise.setTeachables([Numbers, Writing, Redux, Feminism])
+  , Jennifer.setTeachables([FullStack, Gaming, Feminism])
+  , Guang.setTeachables([Express, React, Feminism])
+  , Anule.setTeachables([Knitting, React, Sequelize, Feminism])
+  , April.setTeachables([Crafting, Writing, ReactRedux, Feminism])
+  , Arianna.setTeachables([Reading, React, Feminism])
+  , EmilyI.setTeachables([FullStack, Feminism])
+  , Blanca.setTeachables([Reading, React, Redux, Feminism])
+  , Cara.setTeachables([Reading, Sequelize, Feminism])
+  , Caryn.setTeachables([ReactRedux, Knitting, Reading, Feminism])
+  , Cecilia.setTeachables([Eating, ReactRedux, Feminism])
+  , Christina.setTeachables([Express, Reading, Feminism])
+  , Evlis.setTeachables([ReactRedux, Numbers, Feminism])
+  , EmilyJ.setTeachables([Express, Writing, Reading, Feminism])
+  , Erica.setTeachables([FullStack, Feminism])
+  , Joyce.setTeachables([Gaming, Crafting, Express, Feminism])
+  , Keri.setTeachables([FullStack, Crafting, Feminism])
+  , Layla.setTeachables([Writing, React, Reading, Feminism])
+  , Lina.setTeachables([Numbers, FullStack, Feminism])
+  , Maria.setTeachables([FullStack, Feminism])
+  , Momo.setTeachables([Gaming, Sequelize, Feminism])
+  , Renee.setTeachables([Reading, ReactRedux, Feminism])
+  , Sam.setTeachables([Redux, Reading, Writing, Feminism])
+  , Shannon.setTeachables([React, Redux, Feminism])
+  , Shelby.setTeachables([Sequelize, React, Feminism])
+  , Shiratie.setTeachables([Sequelize, Reading, Feminism])
+  , Priya.setTeachables([FullStack, Feminism])
+  , Eleni.setTeachables([React, Redux, Feminism])
+  ])
+}
+
+Promise.resolve(seed())
+.then(function () {
+  console.log("Finished inserting data");
+})
+.catch(function (err) {
+  console.error("There was totally a problem", err, err.stack);
+})
+.finally(function () {
+  db.close();
+  console.log("connection closed");
+  return null;
+});
+
+function toObject (array) {
+  return array.reduce(function(all, x){
+    all[x.name] = x;
+    return all
+  }, {})
+}

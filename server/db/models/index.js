@@ -16,8 +16,12 @@ const Transactions = require('./transactions')
  * instead of: const User = require('../db/models/user')
  */
 
-//Association
-Teachables.belongsToMany(User, {through: 'userTeachables'} )
+//Associations
+Teachables.belongsToMany(User, {through: 'userTeachables'} ) //export to then seed from?
+User.belongsToMany(Teachables, {through: 'userTeachables'} )
+Transactions.hasOne(User, {as: 'buyer'} )
+Transactions.hasOne(User, {as: 'tutor'} )
+Transactions.hasOne(Teachables)
 
 module.exports = {
   User,
