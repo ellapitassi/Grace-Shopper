@@ -13,6 +13,10 @@ const AuthForm = (props) => {
     <div>
       <form onSubmit={handleSubmit} name={name}>
         <div>
+          <label htmlFor="name"><small>Name</small></label>
+          <input name="name" type="text" />
+        </div>
+        <div>
           <label htmlFor="email"><small>Email</small></label>
           <input name="email" type="text" />
         </div>
@@ -57,10 +61,13 @@ const mapDispatch = (dispatch) => {
   return {
     handleSubmit (evt) {
       evt.preventDefault()
-      const formName = evt.target.name
+      const formName = evt.target.name.value //FIXME: add value to name.
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      const method = 'signup'
+      console.log("input contents -------->", email, password, formName);
+
+      dispatch(auth(email, password, formName, method))
     }
   }
 }
