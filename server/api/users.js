@@ -9,21 +9,15 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-//(Asked Emily for help)
-//getTeachables returns a Promise, so have to refactor to .then off each getTeachables (here and in transactions routes)
-//Get All users by a given Teachable
+//Get All users by a given TeachableId TESTED - WORKING
 router.get('/teachable/:teachable/', (req, res, next) => {
-  const teachable = req.params.teachable; //Assuming this is an id number? Also works if stored as string?
-  console.log(teachable)
-  User.findAll({ include: [{ model: Teachables }] })
-    .then(users => {
-      var filteredUsers = users.filter(user => 
-        (user.getTeachables().indexOf(teachable) != -1) // teachables: [5, 3, 88], so indexOf(3) != -1
-      );
-      users[1].getTeachables()
-      .then(result => res.json(result))
-      // res.json();
+  const teachable = req.params.teachable;
+
+  Teachables.findOne({ where: {id: teachable}},{ include: [{ model: User }] })
+    .then(teachable => {
+      return teachable.getUsers();
     })
+    .then(result => res.json(result))
     .catch(next);
 })
 
@@ -42,7 +36,3 @@ router.post('/', (req, res, next) => {
     }).then(user => res.json(user))
     .catch(next);
 })
-
-
-  // users[1].getTeachables()
-  // .then(result => res.json(result))
