@@ -13,7 +13,7 @@ import TutorList from './tutorList.jsx'
  */
 const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
-
+  console.log(" come here------->", children)
   return (
     <div>
       <h1>BOILERMAKER</h1>

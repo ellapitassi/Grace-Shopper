@@ -31,7 +31,10 @@ export const me = () =>
 export const auth = (email, password, name, method) =>
   dispatch => {
     console.log("this is what get sent to the store------->>>>", email, password, name, method)
-    axios.post(`/auth/${method}`, { email, password, name })
+
+   let userInfo = { email, password, name }
+
+    axios.post(`/auth/${method}`, userInfo)
       .then(res => {
         dispatch(getUser(res.data))
         history.push('/home')

@@ -6,16 +6,29 @@ import {auth} from '../store'
 /**
  * COMPONENT
  */
+
+const NameForm = () => (<div>
+  <label htmlFor="name"><small>Name</small></label>
+  <input name="name" type="text" />
+</div>)
+
+
 const AuthForm = (props) => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="name"><small>Name</small></label>
-          <input name="name" type="text" />
-        </div>
+    <h3>🤰 {name}</h3>
+
+      <form onSubmit={handleSubmit}>
+
+        {
+          name === 'signup'
+          ? <NameForm />
+          : ''
+          
+        }
+
         <div>
           <label htmlFor="email"><small>Email</small></label>
           <input name="email" type="text" />
@@ -58,16 +71,15 @@ const mapSignup = (state) => {
 }
 
 const mapDispatch = (dispatch) => {
+  //console.log("state----->", state, this.state )
   return {
     handleSubmit (evt) {
       evt.preventDefault()
-      const formName = evt.target.name.value //FIXME: add value to name.
+      const userName = evt.target.name.value
       const email = evt.target.email.value
       const password = evt.target.password.value
-      const method = 'signup'
-      console.log("input contents -------->", email, password, formName);
-
-      dispatch(auth(email, password, formName, method))
+      const method = !userName ? 'login': 'signup'
+      dispatch(auth(email, password, userName, method))
     }
   }
 }
