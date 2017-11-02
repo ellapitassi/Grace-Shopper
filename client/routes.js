@@ -5,6 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome} from './components'
+//import LoginSignup from './components/loginSignup.jsx'
 import {me} from './store'
 
 /**

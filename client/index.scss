@@ -1,8 +1,12 @@
 body {
   font-family: sans-serif;
+  background-color: lightcoral;
 
   a {
     text-decoration: none;
+  }
+  *{
+    box-sizing: border-box;
   }
 
   label {
@@ -18,4 +22,27 @@ body {
     margin: 1em;
     display: inline-block;
   }
+
+  .viewTutors {
+    background-color: lightblue;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .tutorProfile {
+    border: 1px solid red;
+    //flex-basis: 50%;
+    padding: 5px;
+    align-self: center;
+    text-align: center;
+    flex: 0 0 auto;
+    width: 25%;
+  }
+  .profileImg {
+    max-width: 100%;
+  }
+
 }
+//NOTE do not ataache id to css; look into slack during review week
