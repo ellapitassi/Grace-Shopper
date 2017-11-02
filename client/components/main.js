@@ -13,7 +13,7 @@ import TutorList from './tutorList.jsx'
  */
 const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
-  console.log(" come here------->", children)
+  //console.log(" come here------->", isLoggedIn)
   return (
     <div>
       <h1>BOILERMAKER</h1>
@@ -34,7 +34,7 @@ const Main = (props) => {
       </nav>
       <hr />
       {children}
-      <TutorList />
+      <TutorList isLoggedIn={isLoggedIn} />
     </div>
   )
 }
