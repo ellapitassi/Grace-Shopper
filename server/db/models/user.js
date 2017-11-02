@@ -9,7 +9,7 @@ const User = db.define('user', {
   },
   img: {
     type: Sequelize.STRING,
-    //allowNull: false,
+    defaultValue: 'www.placecage.com/200/200',
   },
   email: {
     type: Sequelize.STRING,
