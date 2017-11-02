@@ -1,36 +1,38 @@
 const router = require('express').Router()
-const { User, Teachable } = require('../db/models');
+const { User, Teachables } = require('../db/models');
 module.exports = router
 
+//TESTED - WORKING
 router.get('/', (req, res, next) => {
-  User.findAll({ include: [{ model: Teachable }] })
+  User.findAll({ include: [{ model: Teachables }] })
     .then(users => res.json(users))
     .catch(next)
 })
 
+//Get All users by a given TeachableId TESTED - WORKING
+router.get('/teachable/:teachable/', (req, res, next) => {
+  const teachable = req.params.teachable;
+
+  Teachables.findOne({ where: {id: teachable}},{ include: [{ model: User }] })
+    .then(teachable => {
+      return teachable.getUsers();
+    })
+    .then(result => res.json(result))
+    .catch(next);
+})
+
+//TESTED - WORKING
 router.get('/:id', (req, res, next) => {
   User.findById(req.params.id)
     .then(user => res.json(user))
     .catch(next);
 })
 
-//Get All users by a given Teachable
-router.get('/:teachable/', (req, res, next) => {
-  const teachable = req.params.teachable; //Assuming this is an id number? Also works if stored as string?
-  User.findAll({ include: [{ model: Teachable }] })
-    .then(users => {
-      var filteredUsers = users.filter(user => 
-        (user.getTeachables().indexOf(teachable) != -1) // teachables: [5, 3, 88], so indexOf(3) != -1
-      );
-      res.json(filteredUsers);
-    })
-    .catch(next);
-})
-
+//TESTED - WORKING
 router.post('/', (req, res, next) => {
   const info = req.body;
   User.create(info,
-    { include: [{ model: Teachable, as: "teachables"}]
+    { include: [{ model: Teachables, as: "teachables"}]
     }).then(user => res.json(user))
     .catch(next);
-  })
+})
