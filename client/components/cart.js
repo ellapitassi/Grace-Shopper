@@ -2,8 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux'
 
 const Cart = (props) => {
-    const {name, displayName, handleSubmit, error} = props
-    
+    const {cart, handleSubmit/*, error*/} = props
+    const shippingCost = 5;
       return (
         <div>
         <h3>Shopping Cart</h3>
@@ -20,35 +20,46 @@ const Cart = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-              {cookie.map(lineItem => {
-                <tr>
-                    <td>{lineItem.name}</td>
-                    <td><img src={lineItem.img} className="lineItemImg" /></td>
-                    <td>{lineItem.teachable} ({lineItem.teachableCost})</td>
-                    <td>{lineItem.dateTime}</td>
+                {/*The cart is an Order object, so each lineItem is a Transaction object.*/}
+              {cart.map(lineItem => (
+                <tr key={lineItem.id}>
+                    <td>{lineItem.tutor.name}</td>
+                    <td><img src={lineItem.tutor.img} className="lineItemImg" /></td>
+                    <td>{lineItem.teachableId} ({lineItem.teachableCost})</td>
+                    <td>{lineItem.sessionTime}</td>
                     <td>
                         <div>
                             <button type="button" className="duration-adjust duration-minus" handleClick={props.handleMinusClick}>-</button>
-                            <input type="text" id="duration-select-display" className="duration-select-display" pattern="[0-9]*" defaultValue="1" min="0"></input>
+                            <input type="text" id="duration-select-display" className="duration-select-display" pattern="[0-9]*" 
+                            defaultValue={lineItem.duration? lineItem.duration : 0} min="0" />
                             <button type="button" className="duration-adjust duration-plus" handleClick={props.handlePlusClick}>-</button>
                         </div>
                     </td>
-                    <td>${lineItem.teachableCost * document.getElementById("duration-select-display").value}</td>
+                    <td className="cart-row-total">${lineItem.teachable.cost * document.getElementById("duration-select-display").value}</td>
                 </tr>
-              })
-                }
+              ))}
                 </tbody>
                 <tfooter>
-
-                <tfooter>
+                  <tr>
+                    <td>Subtotal</td>
+                    <td className="cart-subtotal" id="cart-subtotal">{document.getElementsByClassName("cart-row-total").reduce(function(total,element){
+                      return total + element.innerHTML;
+                    })}</td>
+                  </tr>
+                  <tr>
+                    <td>Taxes</td>
+                    <td id="cart-taxes">${document.getElementById("cart-subtotal").value*.07}</td>
+                  </tr>
+                  <tr>
+                    <td>Shipping</td>
+                    <td>${shippingCost}</td>
+                  </tr>
+                  <tr>
+                    <td>Grand Total</td>
+                    <td name="grandTotal">${document.getElementById("cart-subtotal").value+document.getElementById("cart-taxes").value+shippingCost}</td>
+                  </tr>
+                </tfooter>
             </table>
-            <div>
-              <label htmlFor="password"><small>Password</small></label>
-              <input name="password" type="password" />
-            </div>
-            <div>
-              <button type="submit">Place your order</button>{/*wording for final checkout button*/}
-            </div>
             {/*error && error.response && <div> {error.response.data} </div>*/}
           </form>
         </div>
@@ -57,7 +68,8 @@ const Cart = (props) => {
 
 const mapState = (state) => {
     return {
-      
+      cart: state.cart/*,
+      error*/
     }
   }
   
@@ -65,10 +77,9 @@ const mapState = (state) => {
     return {
       handleSubmit (evt) {
         evt.preventDefault()
-        const formName = evt.target.name
-        const email = evt.target.email.value
-        const password = evt.target.password.value
-        dispatch(auth(email, password, formName))
+        //const id = something? cookie.id?
+        const cost = evt.target.grandTotal.innerHTML;
+        dispatch(submitOrder(id,cost))
       }
     }
   }
