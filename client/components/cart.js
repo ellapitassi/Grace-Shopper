@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadOrder } from '../store';
+import { fetchOrder } from '../store';
 
-class Cart extends Component {
+export class Cart extends Component {
   componentDidMount() {
-    this.props.loadOrder(/*id*/)
-      .catch(alert);
+    console.log("mounted");
+    this.props.loadOrder();
+    this.cartRowTotal = this.cartRowTotal.bind(this);
+  }
+
+  cartRowTotal() {
+    var crt = document.getElementsByClassName("cart-row-total");
+    if (crt) crt.reduce(function (total, element) {
+      return total + element.innerHTML;
+    })
   }
 
   render() {
-    const { cart, handleSubmit/*, error*/ } = props
-    const shippingCost = 5;
+    const { cart, handleSubmit/*, error*/ } = this.props;
+    const shippingCost = 5.0;
     return (
       <div>
         <h3>Shopping Cart</h3>
@@ -19,11 +27,11 @@ class Cart extends Component {
             <thead>
               <tr>
                 <th>Tutor</th>
-                <th>{/*img column*/}</th>
+                <th></th>
                 <th>Teachable</th>
                 <th>Date/Time</th>
                 <th>Duration</th>
-                <th>{/*cost column*/}</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -48,22 +56,29 @@ class Cart extends Component {
             </tbody>
             <tfooter>
               <tr>
+                <td></td><td></td><td></td><td></td>
                 <td>Subtotal</td>
-                <td className="cart-subtotal" id="cart-subtotal">{document.getElementsByClassName("cart-row-total").reduce(function (total, element) {
-                  return total + element.innerHTML;
-                })}</td>
+                <td className="cart-subtotal" id="cart-subtotal">
+                  {this.props.cartRowTotal}</td>
               </tr>
               <tr>
+                <td></td><td></td><td></td><td></td>
                 <td>Taxes</td>
-                <td id="cart-taxes">${document.getElementById("cart-subtotal").value * .07}</td>
+                <td id="cart-taxes">${document.getElementById("cart-subtotal")? document.getElementById("cart-subtotal").value * 0.07 : "0.00"}</td>
               </tr>
               <tr>
+                <td></td><td></td><td></td><td></td>
                 <td>Shipping</td>
                 <td>${shippingCost}</td>
               </tr>
               <tr>
+                <td></td><td></td><td></td><td></td>
                 <td>Grand Total</td>
-                <td name="grandTotal">${document.getElementById("cart-subtotal").value + document.getElementById("cart-taxes").value + shippingCost}</td>
+                <td name="grandTotal">${
+                  (document.getElementById("cart-subtotal") && document.getElementById("cart-taxes")) ?
+                    parseFloat(document.getElementById("cart-subtotal").value) + parseFloat(document.getElementById("cart-taxes").value) + shippingCost
+                    : "0.00"
+                    }</td>
               </tr>
             </tfooter>
           </table>
@@ -75,24 +90,25 @@ class Cart extends Component {
 }
 
 const mapState = (state) => {
-    return {
-      cart: state.order/*,
+  return {
+    cart: state.order/*,
       error*/
-    }
   }
-  
-  const mapDispatch = (dispatch) => {
-    return {
-      handleSubmit (evt) {
-        evt.preventDefault()
-        //const id = something? cookie.id?
-        const cost = evt.target.grandTotal.innerHTML;
-        dispatch(submitOrder(id,cost))
-      },
-      loadOrder() {
-        dispatch(fetchOrder());
-      }
-    }
-  }
+}
 
-export const ShoppingCart = connect(mapState, mapDispatch)(Cart);
+const mapDispatch = (dispatch) => {
+  return {
+    handleSubmit: (evt) => {
+      evt.preventDefault()
+      //const id = something? cookie.id?
+      const cost = evt.target.grandTotal.innerHTML;
+      //dispatch(submitOrder(id, cost))
+    },
+    loadOrder: () => {
+      console.log("loading order");
+      dispatch(fetchOrder());
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(Cart);
