@@ -2,14 +2,6 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Transactions = db.define('transactions', {
-  // buyer: {
-  //   type: Sequelize.STRING,
-  //   allowNull: false
-  // },
-  // tutor: {
-  //   type: Sequelize.STRING,
-  //   allowNull: false
-  // },
   cost: {
       type: Sequelize.DECIMAL
   },

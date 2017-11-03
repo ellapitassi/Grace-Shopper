@@ -8,20 +8,20 @@ export class TutorList extends Component {
         evt.preventDefault();
 
     }
-    
+
     render() {
         //const getAllTutorsMethod = this.props.getAllTutorsMethod;
         console.log("--->", this.props)
         const tutors = this.props.tutors;
 
         return (
-            <div>
+            <div className="tutor-list">
                 <h1>Tutors:</h1>
                 <div className="viewTutors">
                 {
                     tutors.map(tutor => (
                         <div className="tutorProfile" key={tutor.id}>
-                            <h5>{tutor.name}</h5>
+                            <h2>{tutor.name}</h2>
                             <img src={tutor.img} className="profileImg" />
 
                             <p>Price TBD</p>
@@ -54,7 +54,7 @@ const tutors =  [
         img: '/images/ella.jpg',
         email: "ellapitassi23@gmail.com",
         password: "abc123",
-        rating: "5"   
+        rating: "5"
     },
     {
         name: "Anule Ndukwu",
