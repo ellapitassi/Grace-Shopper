@@ -17,7 +17,7 @@ const Main = (props) => {
   console.log("children=====>", children)
   return (
     <div>
-      <h1>Buy a Hopper Tutor</h1>
+      <h1>PEER TUTORING WHATWHAT</h1>
       <nav>
         {
           isLoggedIn
