@@ -4,17 +4,36 @@ import { withRouter } from 'react-router';
 import { fetchOrder } from '../store';
 
 export class Cart extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      durationSelectDisplay: 0,
+      cartSubtotal: 0,
+      cartTaxes: 0
+    }
+    this.cartRowTotal = this.cartRowTotal.bind(this);
+    this.dateFormat = this.dateFormat.bind(this);
+  }
+
   componentDidMount() {
     console.log("mounted!!!!!!!!!!!!!");
     this.props.loadOrder();
-    this.cartRowTotal = this.cartRowTotal.bind(this);
   }
 
   cartRowTotal() {
     var crt = document.getElementsByClassName("cart-row-total");
     if (crt) crt.reduce(function (total, element) {
       return total + element.innerHTML;
-    })
+    }) 
+  }
+
+  dateFormat(date) {
+
+    var day = date.slice(0,10);
+    var time = date.slice(11, 16);
+
+    return day + ' ' +time;
   }
 
   render() {
@@ -41,24 +60,24 @@ export class Cart extends Component {
                 <tr key={lineItem.id}>
                   <td>{lineItem.tutor.name}</td>
                   <td><img src={lineItem.tutor.img} className="lineItemImg" /></td>
-                  <td>{lineItem.teachableId} ({lineItem.teachableCost})</td>
-                  <td>{lineItem.sessionTime}</td>
+                  <td>{lineItem.teachable.name} ${lineItem.teachable.price}/hr</td>
+                  <td>{this.dateFormat(lineItem.sessionTime)}</td>
                   <td>
                     <div>
                       <button type="button" className="duration-adjust duration-minus" handleClick={this.props.handleMinusClick}>-</button>
-                      <input type="text" id="duration-select-display" className="duration-select-display" pattern="[0-9]*"
+                      <input type="text" ref={"duration-select-display-"+lineItem.id} className="duration-select-display" pattern="[0-9]*"
                         defaultValue={lineItem.duration ? lineItem.duration : 0} min="0" />
                       <button type="button" className="duration-adjust duration-plus" handleClick={this.props.handlePlusClick}>-</button>
                     </div>
                   </td>
-                  <td className="cart-row-total">${/*lineItem.teachable.cost * document.getElementById("duration-select-display").value*/}</td>
+                  <td className="cart-row-total">${/*lineItem.teachable.cost **/ console.log("SDSDFSFSDF", this.refs["duration-select-display-"+lineItem.id])}</td>
                 </tr>
               ))}
               <tr>
                 <td></td><td></td><td></td><td></td>
                 <td>Subtotal</td>
                 <td className="cart-subtotal" id="cart-subtotal">
-                  {this.props.cartRowTotal}</td>
+                  {this.cartRowTotal}</td>
               </tr>
               <tr>
                 <td></td><td></td><td></td><td></td>
