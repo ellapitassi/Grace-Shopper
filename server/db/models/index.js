@@ -6,11 +6,11 @@ const Orders = require('./orders')
 //Associations
 Teachables.belongsToMany(User, {through: 'userTeachables'} )
 User.belongsToMany(Teachables, {through: 'userTeachables'} )
-Transactions.belongsTo(User, {as: 'buyer'} )
+Orders.belongsTo(User, {as: 'buyer'} )
 Transactions.belongsTo(User, {as: 'tutor'} )
 Transactions.belongsTo(Teachables) 
 Transactions.belongsTo(Orders)
-Orders.belongsTo(User)
+Orders.hasMany(Transactions)
 
 module.exports = {
   User,

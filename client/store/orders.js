@@ -16,15 +16,22 @@ const removeOrder = order => ({ type: REMOVE_ORDER, order })
 //THUNKS
 export const fetchOrder = () =>
   dispatch =>
-    axios.get(`api/cart/`)
-      .then(res =>
-        dispatch(getOrder(res.data)))
+  {console.log("NERHERNSKJDFNSDFNSDKF", dispatch)
+    axios.get(`/api/cart`)
+      .then(res => {
+        console.log("RES", res)
+        console.log(dispatch)
+        return dispatch(getOrder(res.data))
+      })
       .catch(err => console.log(err))
+    }
+
 
 //REDUCER
 export default function (state = defaultState, action) {
   switch (action.type) {
     case GET_ORDER:
+    console.log("actionorder")
       return action.order
     case POST_ORDER:
       return action.order

@@ -5,18 +5,23 @@ router.use(withCart);
 
 function withCart(req, res, next) {
     if (req.cart) return next();
-
-    const { cartId } = req.session;
+    return Orders.findById(1,{ include: [{all: true, include: [{all: true}]}]}).then(sendCart).catch(next);
+    /*const { cartId } = req.session;
     if (cartId) {
-        return Orders.findById(cartId)
+        return Orders.findById(cartId, { include: [{all: true}]})
             .then(sendCart)
-    }
+            .catch(next)
+    }*/
 
-    Orders.create({ user: req.user })//Where does this req.user come from? The session?
-        .then(cart => {
-            req.session.cartId = cart.id
-        })
-        .then(sendCart);
+    /*Orders.cartForUser(req.user)
+        .then(sendCart)
+        .catch(next)*/
+
+    // Orders.create({ user: req.user })//Where does this req.user come from? The session?
+    //     .then(cart => {
+    //         req.session.cartId = cart.id
+    //     })
+    //     .then(sendCart);
 
     function sendCart(cart) {
         req.cart = cart;
