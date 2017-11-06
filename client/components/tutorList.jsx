@@ -1,15 +1,17 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import fetchTutors from '../store/tutors'
 
-const Selection = () => (<div>
+const Selection = (props) => {
+    console.log("props for selcetion---->", props.teachables.length)
+    return (<div>
     <select>
-        <option value="skill to be taught">Skill To Be Taught</option>
+        <option value={props.teachables[0].name}>{props.teachables[0].name}</option>
     </select>
     <button>
         Add To Cart
     </button>
 </div>)
+}
 
 export class TutorList extends Component {
 
@@ -19,6 +21,7 @@ export class TutorList extends Component {
 
     componentDidMount() {
         const gettingTutors = this.props.gettingTutors();
+        const gettingTeachables = this.props.gettingTeachables()
     }
     
     render() {
@@ -30,6 +33,15 @@ export class TutorList extends Component {
             tutors = [];
         }
 
+        let teachables;
+        if (this.props.teachables) {
+            teachables = this.props.teachables
+        } else {
+            teachables = [{name: ''}];
+        }
+
+        // test teachables 
+        console.log("gettingteachable---->", this.props.teachables)
         return (
             <div>
                 <h1>Tutors:</h1>
@@ -42,7 +54,7 @@ export class TutorList extends Component {
                             <p>Price TBD</p>
                             <p>Rating TBD</p>
                             {isLoggedIn ?
-                            <Selection />
+                            <Selection teachables={teachables} />
                             : ''}
                         </div>
                     ))
@@ -55,7 +67,8 @@ export class TutorList extends Component {
 
 const mapStateToProps = state => {
     return {
-        tutors: state.tutors
+        tutors: state.tutors,
+        teachables: state.teachables
     }
 }
 
