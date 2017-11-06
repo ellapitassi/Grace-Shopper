@@ -4,6 +4,7 @@ module.exports = router
 
 //TESTED - WORKING
 router.get('/', (req, res, next) => {
+  console.log("REQUEST FROM THE STORE")
   User.findAll({ include: [{ model: Teachables }] })
     .then(users => res.json(users))
     .catch(next)
