@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import {logout} from '../store'
+import store, {logout, fetchTutors, fetchteachables} from '../store'
 import TutorList from './tutorList.jsx'
+import axios from 'axios'
 
 /**
  * COMPONENT
@@ -11,9 +12,10 @@ import TutorList from './tutorList.jsx'
  *  else common to our entire app. The 'picture' inside the frame is the space
  *  rendered out by the component's `children`.
  */
+
 const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
-  console.log(" come here------->", children)
+  //console.log(" come here------->", isLoggedIn)
   return (
     <div>
       <h1>PEER TUTORING WHATWHAT</h1>
@@ -34,7 +36,14 @@ const Main = (props) => {
       </nav>
       <hr />
       {children}
-      <TutorList />
+      <TutorList
+        isLoggedIn={isLoggedIn}
+        gettingTutors={() => {
+          store.dispatch(fetchTutors())
+        }}
+        gettingTeachables={() => {
+          store.dispatch(fetchteachables())
+        }} />
     </div>
   )
 }

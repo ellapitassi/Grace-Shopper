@@ -1,19 +1,54 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import fetchTutors from '../store/tutors'
+
+const Selection = (props) => {
+    console.log("props for selcetion---->", props.teachables.length)
+    return (<div>
+     
+
+        <select>
+        {
+        props.teachables.map(ele => (
+            <option value={ele.name} key={ele.id}>{ele.name + ' $' + ele.price + '.00'}</option>
+            ))
+        }
+        </select>
+    
+    <button>
+        Add To Cart
+    </button>
+</div>)
+}
 
 export class TutorList extends Component {
 
     addToCart(evt) {
         evt.preventDefault();
+    }
 
+    componentDidMount() {
+        const gettingTutors = this.props.gettingTutors();
+        const gettingTeachables = this.props.gettingTeachables()
     }
     
     render() {
-        //const getAllTutorsMethod = this.props.getAllTutorsMethod;
-        console.log("--->", this.props)
-        const tutors = this.props.tutors;
+        const isLoggedIn = this.props.isLoggedIn;
+        let tutors;
+        if (this.props.tutors) {
+            tutors = this.props.tutors
+        } else {
+            tutors = [];
+        }
 
+        let teachables;
+        if (this.props.teachables) {
+            teachables = this.props.teachables
+        } else {
+            teachables = [{name: ''}];
+        }
+
+        // test teachables 
+        console.log("gettingteachable---->", this.props.teachables)
         return (
             <div>
                 <h1>Tutors:</h1>
@@ -23,15 +58,11 @@ export class TutorList extends Component {
                         <div className="tutorProfile" key={tutor.id}>
                             <h5>{tutor.name}</h5>
                             <img src={tutor.img} className="profileImg" />
-
                             <p>Price TBD</p>
                             <p>Rating TBD</p>
-                            <select>
-                             <option value="skill to be taught">Skill To Be Taught</option>
-                            </select>
-                                <button>
-                                    Add To Cart
-                                </button>
+                            {isLoggedIn ?
+                            <Selection teachables={teachables} />
+                            : ''}
                         </div>
                     ))
                 }
@@ -41,85 +72,11 @@ export class TutorList extends Component {
     }
 }
 
-const tutors =  [
-    {
-        name: 'Guang Zhu',
-        img: '/images/guang.jpg',
-        email: 'bha.guang@gmail.com',
-        password: 'abc123',
-        rating: '5'
-    },
-    {
-        name: "Ella Pitassi",
-        img: '/images/ella.jpg',
-        email: "ellapitassi23@gmail.com",
-        password: "abc123",
-        rating: "5"   
-    },
-    {
-        name: "Anule Ndukwu",
-        img: '/images/anule.jpg',
-        email: "anule@gmail.com",
-        password: "abc123",
-        rating: "4"
-    },
-    {
-        name: "April Rueb",
-        img: '/images/april.jpg',
-        email: "april@gmail.com",
-        password: "abc123",
-        rating: "4"
-    },
-    {
-        name: "Arianna Lanz",
-        img: '/images/arianna.jpg',
-        email: "arianna@gmail.com",
-        password: "abc123",
-        rating: "4"
-    },
-    {
-        name: "Ashi",
-        img: '/images/ashi.jpg',
-        email: "ashi@gmail.com",
-        password: "abc123",
-        rating: "4"
-    },
-    {
-        name: "Emily Intersimone",
-        img: '/images/emilyi.jpg',
-        email: "emilyi@gmail.com",
-        password: "abc123",
-        rating: "4"
-    },
-    {
-        name: "Blanca Sanchez",
-        img: '/images/blanca.jpg',
-        email: "blanca@gmail.com",
-        password: "abc123",
-        rating: "4"
-    },
-    {
-        name: "Cara Lang",
-        img: '/images/cara.jpg',
-        email: "cara@gmail.com",
-        password: "abc123",
-        rating: "4"
-    }
-]
-
-
 const mapStateToProps = state => {
     return {
-        tutors: tutors //state.tutors
+        tutors: state.tutors,
+        teachables: state.teachables
     }
 }
 
-const mapDispatchToProps = function(dispatch) {
-    return {
-        getAllTutorsMethod: function() {
-            dispatch(fetchTutors())
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TutorList);
+export default connect(mapStateToProps, /*mapDispatchToProps*/)(TutorList);
