@@ -39,7 +39,9 @@ const Main = (props) => {
       <TutorList isLoggedIn={isLoggedIn} 
       gettingTutors={() => {
         store.dispatch(fetchTutors())
-      }} />
+      }} 
+      
+      />
     </div>
   )
 }
