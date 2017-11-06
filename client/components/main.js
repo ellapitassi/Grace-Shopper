@@ -18,7 +18,7 @@ const Main = (props) => {
   //console.log(" come here------->", isLoggedIn)
   return (
     <div>
-      <h1>BOILERMAKER</h1>
+      <h1>PEER TUTORING WHATWHAT</h1>
       <nav>
         {
           isLoggedIn
