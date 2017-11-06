@@ -2,18 +2,15 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 
 const Selection = (props) => {
-    console.log("props for selcetion---->", props.teachables.length)
+    //console.log("props for selcetion---->", props.teachables.length)
     return (<div>
-     
-
-        <select>
+     <select className="select-tutor">
         {
         props.teachables.map(ele => (
             <option value={ele.name} key={ele.id}>{ele.name + ' $' + ele.price + '.00'}</option>
             ))
         }
         </select>
-    
     <button>
         Add To Cart
     </button>
@@ -21,16 +18,16 @@ const Selection = (props) => {
 }
 
 export class TutorList extends Component {
-
+    //TODO: link to cart store. Add ratings
     addToCart(evt) {
         evt.preventDefault();
     }
 
     componentDidMount() {
-        const gettingTutors = this.props.gettingTutors();
-        const gettingTeachables = this.props.gettingTeachables()
+        this.props.gettingTutors();
+        this.props.gettingTeachables()
     }
-    
+
     render() {
         const isLoggedIn = this.props.isLoggedIn;
         let tutors;
@@ -47,8 +44,7 @@ export class TutorList extends Component {
             teachables = [{name: ''}];
         }
 
-        // test teachables 
-        console.log("gettingteachable---->", this.props.teachables)
+        //console.log("gettingteachable---->", this.props.teachables)
         return (
             <div>
                 <h1>Tutors:</h1>
@@ -58,7 +54,6 @@ export class TutorList extends Component {
                         <div className="tutorProfile" key={tutor.id}>
                             <h5>{tutor.name}</h5>
                             <img src={tutor.img} className="profileImg" />
-                            <p>Price TBD</p>
                             <p>Rating TBD</p>
                             {isLoggedIn ?
                             <Selection teachables={teachables} />

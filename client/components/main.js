@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import store, {logout, fetchTutors, fetchteachables} from '../store'
 import TutorList from './tutorList.jsx'
-import axios from 'axios'
 
 /**
  * COMPONENT
@@ -15,10 +14,10 @@ import axios from 'axios'
 
 const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
-  //console.log(" come here------->", isLoggedIn)
+  console.log("children=====>", children)
   return (
     <div>
-      <h1>BOILERMAKER</h1>
+      <h1>Buy a Hopper Tutor</h1>
       <nav>
         {
           isLoggedIn
