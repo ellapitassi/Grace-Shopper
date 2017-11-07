@@ -3,7 +3,8 @@ var Promise = require("bluebird");
 var {
   User,
   Teachables,
-  Transactions
+  Transactions,
+  Orders
 } = require('./models');
 var db = require('./index');
 var data = require('./data');
@@ -12,7 +13,8 @@ async function seed () {
   await db.sync({ force: true })
   const users = toObject(await Promise.map(data.user, (data => User.create(data))))
   const teachables = toObject(await Promise.map(data.teachables, (data => Teachables.create(data))))
-  //const transactions = await Promise.map(data.transactions, (data => Transactions.create(data)))
+  const orders = toObject(await Promise.map(data.orders, (data => Orders.create(data))))
+  const transactions = toObject(await Promise.map(data.transactions, (data => Transactions.create(data))))
   const {'Annelise Thorsen': Annelise,'Ella Pitassi': Ella, 'Jennifer Neale': Jennifer, 'Guang Zhu': Guang, 'Anule Ndukwu': Anule, 'April Rueb': April, 'Arianna Lanz': Arianna, Ashi, 'Emily Intersimone': EmilyI, 'Blanca Sanchez': Blanca, 'Cara Lang': Cara, 'Caryn McCarthy': Caryn, 'Cecilia Chang': Cecilia, 'Christina Ng': Christina, 'Evlis Henry': Evlis, 'Emily Jordan': EmilyJ, 'Erica Chai': Erica, 'Joyce Ren': Joyce, 'Keri Miller': Keri, 'Layla Hedges': Layla, 'Lina Morales': Lina, 'Maria Betances': Maria, 'Moyouri Bhattacharjee': Momo, 'Renee Sajedian': Renee, 'Samantha Zhang': Sam, 'Shannon Kendall': Shannon, 'Shelby Rackley': Shelby, 'Shiratie Prodhan': Shiratie, 'Priya Vaidyanath': Priya, 'Eleni Arvanitis': Eleni} = users
   const {React, Redux, Express, Sequelize, Crafting, Knitting, Writing, Reading, Numbers, Eating, Gaming, FullStack, ReactRedux, Feminism} = teachables
   return Promise.all([
