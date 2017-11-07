@@ -2,9 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import store, {logout, fetchTutors, fetchteachables} from '../store'
-import TutorList from './tutorList.jsx'
-import axios from 'axios'
+import store, { logout, fetchTutors, fetchteachables } from '../store'
 
 /**
  * COMPONENT
@@ -15,7 +13,7 @@ import axios from 'axios'
 
 const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
-  //console.log(" come here------->", isLoggedIn)
+  console.log("children=====>", children)
   return (
     <div>
       <h1>PEER TUTORING WHATWHAT</h1>
@@ -36,14 +34,6 @@ const Main = (props) => {
       </nav>
       <hr />
       {children}
-      <TutorList
-        isLoggedIn={isLoggedIn}
-        gettingTutors={() => {
-          store.dispatch(fetchTutors())
-        }}
-        gettingTeachables={() => {
-          store.dispatch(fetchteachables())
-        }} />
     </div>
   )
 }

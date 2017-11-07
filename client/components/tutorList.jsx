@@ -1,19 +1,26 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import { NavLink, Link } from 'react-router-dom';
+import { fetchTeachablesById } from '../store'
 
 const Selection = (props) => {
-    console.log("props for selcetion---->", props.teachables.length)
-    return (<div>
-     
 
-        <select>
+       let teachables;
+       if (props.teachables) {
+            teachables = props.teachables
+        } else {
+            teachables = [{name: ''}];
+        }
+
+    return (<div>
+     <select className="select-tutor">
+
         {
-        props.teachables.map(ele => (
+           teachables.map(ele => (
             <option value={ele.name} key={ele.id}>{ele.name + ' $' + ele.price + '.00'}</option>
             ))
         }
         </select>
-    
     <button>
         Add To Cart
     </button>
@@ -21,17 +28,19 @@ const Selection = (props) => {
 }
 
 export class TutorList extends Component {
-
+    //TODO: link to cart store. Add ratings
     addToCart(evt) {
         evt.preventDefault();
     }
 
     componentDidMount() {
-        const gettingTutors = this.props.gettingTutors();
-        const gettingTeachables = this.props.gettingTeachables()
+        this.props.gettingTutors();
     }
-    
+
     render() {
+
+        console.log('--->>state', this.props)
+
         const isLoggedIn = this.props.isLoggedIn;
         let tutors;
         if (this.props.tutors) {
@@ -40,15 +49,6 @@ export class TutorList extends Component {
             tutors = [];
         }
 
-        let teachables;
-        if (this.props.teachables) {
-            teachables = this.props.teachables
-        } else {
-            teachables = [{name: ''}];
-        }
-
-        // test teachables 
-        console.log("gettingteachable---->", this.props.teachables)
         return (
             <div>
                 <h1>Tutors:</h1>
@@ -56,13 +56,16 @@ export class TutorList extends Component {
                 {
                     tutors.map(tutor => (
                         <div className="tutorProfile" key={tutor.id}>
+                            <Link to={`/tutors/${tutor.id}`}>
+
                             <h5>{tutor.name}</h5>
                             <img src={tutor.img} className="profileImg" />
-                            <p>Price TBD</p>
                             <p>Rating TBD</p>
+
                             {isLoggedIn ?
-                            <Selection teachables={teachables} />
+                                    <Selection teachables={tutor.teachables} />
                             : ''}
+                            </Link>
                         </div>
                     ))
                 }
@@ -72,10 +75,10 @@ export class TutorList extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
+const mapStateToProps = (state) => {
+    console.log('--->>state', state)
+         return {
         tutors: state.tutors,
-        teachables: state.teachables
     }
 }
 
