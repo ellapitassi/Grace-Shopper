@@ -42,11 +42,11 @@ export class TutorList extends Component {
         console.log('--->>state', this.props)
 
         const isLoggedIn = this.props.isLoggedIn;
-        let tutors;
+        let tutors = [];
         if (this.props.tutors) {
             tutors = this.props.tutors
-        } else {
-            tutors = [];
+        // } else {
+        //     tutors = [];
         }
 
         return (
@@ -56,16 +56,17 @@ export class TutorList extends Component {
                 {
                     tutors.map(tutor => (
                         <div className="tutorProfile" key={tutor.id}>
-                            <Link to={`/tutors/${tutor.id}`}>
 
                             <h5>{tutor.name}</h5>
+                            <Link to={`/tutors/${tutor.id}`}>
                             <img src={tutor.img} className="profileImg" />
+                            </Link>
+
                             <p>Rating TBD</p>
 
                             {isLoggedIn ?
                                     <Selection teachables={tutor.teachables} />
                             : ''}
-                            </Link>
                         </div>
                     ))
                 }
