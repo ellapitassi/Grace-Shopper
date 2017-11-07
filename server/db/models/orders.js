@@ -10,7 +10,7 @@ const Orders = db.define('orders', {
  taxes: {
     type: Sequelize.VIRTUAL,
     get() {
-        return this.get('subtotal') * 0.07;
+        return this.get('subtotal') * 0.07 + 1;
     }
 },
 grandTotal: {
@@ -24,14 +24,14 @@ grandTotal: {
 
 Orders.cartForUser = function (user) {
     if (!user) return Orders.create()
-    return Orders.findOrCreate({where: {userId: user.id}},{ include: [{all: true}]})
+    return Orders.findOrCreate({where: {buyerId: user.id}},{ include: [{all: true}]})
             .then(([cart, _]) => cart)
 }
 
-Orders.addHook('beforeSave', 'generateSubtotal', (order) =>
+/*Orders.addHook('beforeUpdate', 'generateSubtotal', (order) =>
     Transactions.findAll( {where: {orderId: order.id}} )
 .then(res => {
     order.subtotal = res.length > 0 ? res.reduce((sum, transaction) => sum + transaction.cost) : 0;
-}))
+}))*/
 
 module.exports = Orders
