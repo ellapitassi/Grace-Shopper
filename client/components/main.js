@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {withRouter, Link} from 'react-router-dom'
+import { Link } from 'react-router-dom' //This is weird; withRouter comes from react-router, not react-router-dom
+import { withRouter } from 'react-router'
 import store, { logout, fetchTutors, fetchteachables } from '../store'
 
 /**
@@ -29,6 +30,8 @@ const Main = (props) => {
               {/* The navbar will show these links before you log in */}
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
+              <Link to="/tutors">Tutors</Link>
+              <Link to="/shoppingcart">Cart</Link>
             </div>
         }
       </nav>
