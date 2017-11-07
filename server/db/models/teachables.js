@@ -7,7 +7,7 @@ const Teachables = db.define('teachables', {
     allowNull: false,
   },
   price: {
-    type: Sequelize.DECIMAL
+    type: Sequelize.FLOAT
   }
 })
 

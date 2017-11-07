@@ -8,7 +8,7 @@ Teachables.belongsToMany(User, {through: 'userTeachables'} )
 User.belongsToMany(Teachables, {through: 'userTeachables'} )
 Orders.belongsTo(User, {as: 'buyer'} )
 Transactions.belongsTo(User, {as: 'tutor'} )
-Transactions.belongsTo(Teachables) 
+Transactions.belongsTo(Teachables)
 Transactions.belongsTo(Orders)
 Orders.hasMany(Transactions)
 
