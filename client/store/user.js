@@ -37,7 +37,7 @@ export const auth = (email, password, name, method) =>
     axios.post(`/auth/${method}`, userInfo)
       .then(res => {
         dispatch(getUser(res.data))
-        history.push('/home')
+        history.push('/tutors')
       })
       .catch(error =>
         dispatch(getUser({error})))
