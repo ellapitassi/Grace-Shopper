@@ -5,7 +5,7 @@ const Orders = require('./orders')
 
 const Transactions = db.define('transactions', {
   cost: {
-      type: Sequelize.FLOAT //TODO: Change Decimals to floats of pennies; better for math
+      type: Sequelize.FLOAT
   },
   sessionTime: {
     type: Sequelize.DATE,
@@ -26,8 +26,7 @@ Transactions.addHook('beforeSave', 'generateCost', (transaction) =>
     transaction.cost = pr * transaction.duration;
     return Orders.findById(transaction.orderId)
     .then(foundOrder => {
-      //foundOrder.subtotal = "found "+foundOrder; //+ transaction.cost;
-      foundOrder.update({subtotal:foundOrder.subtotal+transaction.cost});
+      foundOrder.update({subtotal: foundOrder.subtotal + transaction.cost});
     })
 }))
 
