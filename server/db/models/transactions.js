@@ -7,7 +7,8 @@ const Transactions = db.define('transactions', {
       type: Sequelize.FLOAT //TODO: Change Decimals to floats of pennies; better for math
   },
   sessionTime: {
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
+    defaultValue: Date.now()
   },
   duration: {
       type: Sequelize.FLOAT,
