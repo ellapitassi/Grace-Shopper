@@ -3,7 +3,7 @@ const db = require('../db')
 
 const Orders = db.define('orders', {
  cost: {
-     type: Sequelize.DECIMAL,
+     type: Sequelize.FLOAT,
      defaultValue: 0
  }
 })
