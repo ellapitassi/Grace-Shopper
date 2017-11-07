@@ -13,6 +13,11 @@ const app = express()
 const socketio = require('socket.io')
 module.exports = app
 
+//For stripe
+//const SERVER_CONFIGS = require('./constants/server');
+const configureServer = require('./constants/server.js');
+const paymentApi = require('./api/payment.js');
+
 /**
  * In your development environment, you can keep all of your
  * app's secret API keys in a file called `secrets.js`, in your project
@@ -50,6 +55,10 @@ const createApp = () => {
   }))
   app.use(passport.initialize())
   app.use(passport.session())
+
+  //Config files for Stripe
+  configureServer(app);
+  paymentApi(app);
 
   // auth and api routes
   app.use('/auth', require('./auth'))

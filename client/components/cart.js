@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchOrder } from '../store';
 import { Link } from 'react-router-dom'
+import Checkout from './Checkout.js';
 
 export class Cart extends Component {
 
@@ -84,9 +85,16 @@ export class Cart extends Component {
                 </tr>
               </tbody>
             </table>
+            <Checkout
+              name={'Peer Tutoring Service'}
+              description={'Good luck!'}
+              amount={cart.grandTotal}
+            />
             {/*error && error.response && <div> {error.response.data} </div>*/}
           </form>
           : <p>Your cart is empty! Why not go look at available <Link to="/tutors">Tutors</Link>?</p>}
+
+        
       </div>
     )
   }
