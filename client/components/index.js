@@ -7,3 +7,8 @@ export {default as Main} from './main'
 export {default as UserHome} from './user-home'
 export { Login, Signup } from './auth-form'
 export { default as Cart } from './cart'
+// export { singleTutor } from './singleTutor.jsx'
+//export { TutorList } from './tutorList.jsx'
+
+// this is from tutorlist
+// <Route exact path="/hello" render={() => (<h1>Hello </h1>)} />

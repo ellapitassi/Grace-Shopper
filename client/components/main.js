@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import store, {logout, fetchTutors, fetchteachables} from '../store'
-import TutorList from './tutorList.jsx'
+import store, { logout, fetchTutors, fetchteachables } from '../store'
 
 /**
  * COMPONENT
@@ -35,14 +34,6 @@ const Main = (props) => {
       </nav>
       <hr />
       {children}
-      <TutorList
-        isLoggedIn={isLoggedIn}
-        gettingTutors={() => {
-          store.dispatch(fetchTutors())
-        }}
-        gettingTeachables={() => {
-          store.dispatch(fetchteachables())
-        }} />
     </div>
   )
 }

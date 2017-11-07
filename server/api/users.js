@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { User, Teachables } = require('../db/models');
+const { User, Teachables, userTeachables } = require('../db/models');
 module.exports = router
 
 //TESTED - WORKING
@@ -24,9 +24,12 @@ router.get('/teachable/:teachable/', (req, res, next) => {
 
 //TESTED - WORKING
 router.get('/:id', (req, res, next) => {
-  User.findById(req.params.id)
-    .then(user => res.json(user))
+  User.findOne({ where: {id: req.params.id}})
+    .then(user => {
+      return user.getTeachables()
+      .then(teachables => res.json({ tutor: user, teachables}))
     .catch(next);
+})
 })
 
 //TESTED - WORKING
