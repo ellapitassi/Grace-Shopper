@@ -4,11 +4,11 @@
     "\\client",
     "\\client\\components",
     "\\client\\store",
-    "\\public",
     "\\server",
     "\\server\\api",
-    "\\server\\db"
+    "\\server\\db",
+    "\\server\\db\\models"
   ],
-  "SelectedNode": "\\public\\index.html",
+  "SelectedNode": "\\client\\components\\auth-form.js",
   "PreviewInSolutionExplorer": false
 }

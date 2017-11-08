@@ -21,6 +21,7 @@ const Main = (props) => {
       <nav>
         <Link to="/home">Home</Link>
         <Link to="/tutors">Tutors</Link>
+        
         <div className="pull-right">
         {
           isLoggedIn
