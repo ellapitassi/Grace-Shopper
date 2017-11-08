@@ -16,13 +16,19 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
+        test: /\.css$/,
+        use: [
+          'css-loader'
+        ]
+      },
+      {
         test: /\.scss$/,
         use: [
           'style-loader',
           'css-loader',
           'sass-loader'      
         ]
-      },
+      },      
       {
         test: /\.svg$|\.ttf?|\.woff$|\.woff2|\.eof|\.eot/,
         loader: 'file-loader'

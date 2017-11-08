@@ -51,7 +51,7 @@ export class TutorList extends Component {
 
         return (
             <div>
-                <h1>Tutors:</h1>
+                <h2 align="center">Tutors</h2>
                 <div className="viewTutors">
                 {
                     tutors.map(tutor => (

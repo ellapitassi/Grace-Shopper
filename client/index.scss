@@ -1,11 +1,15 @@
 body {
-  font-family: sans-serif;
-  background-color: lightcoral;
+  font-family: Impact;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/9f/Graph-paper.svg');
+  background-repeat: repeat-x-y;
+  background-attachment: fixed;
+
 
   a {
     text-decoration: none;
   }
-  *{
+
+  * {
     box-sizing: border-box;
   }
 
@@ -24,7 +28,6 @@ body {
   }
 
   .viewTutors {
-    background-color: lightblue;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -32,13 +35,14 @@ body {
   }
 
   .tutorProfile {
-    border: 1px solid red;
+    border: 1px;
     padding: 5px;
     align-self: center;
     text-align: center;
     flex: 0 0 auto;
     width: 25%;
   }
+
   .profileImg {
     max-width: 100%;
   }
@@ -51,5 +55,37 @@ body {
   .duration-select-display {
     size: 10;
   }
-}
 
+  .pull-right {
+    float: right;
+  }
+
+  #carousel {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+
+  #carousel #carousel-text {
+    position: absolute;
+    top: 45vh;
+    color: #fff;
+    text-shadow: 2px 2px #252525;
+    z-index: 1;
+  }
+
+  #carousel .carousel-image {
+    position: absolute;
+    display: block;
+    margin: auto;
+    min-width: 100%;
+    height: 100%;
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+
+  #carousel .carousel-image.hidden {
+    opacity: 0;
+  }
+
+}

@@ -7,11 +7,21 @@ import { withRouter } from 'react-router'
  * COMPONENT
  */
 export const UserHome = (props) => {
-  const {email} = props
+  const { email, name, isLoggedIn } = props
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      {isLoggedIn && <h3> Welcome, {name}</h3>}
+      {/*insert carousel and featured tutors and quickie form*/}
+
+      <section id="carousel">
+        <div id="carousel-text">
+          <h1>TEACHABLES: </h1>
+        </div>
+        <img className="carousel-image" src='/images/home1.jpg' />
+
+      </section>
+
     </div>
   )
 }
@@ -21,7 +31,9 @@ export const UserHome = (props) => {
  */
 const mapState = (state) => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    name: state.user.name,
+    isLoggedIn: !!state.user.id
   }
 }
 

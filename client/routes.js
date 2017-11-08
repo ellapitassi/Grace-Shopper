@@ -35,13 +35,9 @@ class Routes extends Component {
               }} />
             )} />
             <Route path="/tutors/:userId" component={singleTutor} />
-            {
-              isLoggedIn &&
-                <Switch>
-                  {/* Routes placed here are only available after logging in */}
-                  <Route path="/home" component={UserHome} />               
-                </Switch>
-            }
+            <Route path="/home" component={UserHome} />
+            
+            
               
             {/* Displays our Login component as a fallback */}
 
