@@ -32,6 +32,7 @@ export const tutorInfo = (tutorId) =>
             dispatch(getTutorInfo(res.data))
         })
         .catch(err => console.log(err))
+        
     }
 
 //REDUCER
