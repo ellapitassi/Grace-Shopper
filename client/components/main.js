@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {withRouter, Link} from 'react-router-dom'
-import store, {logout, fetchTutors, fetchteachables} from '../store'
-import TutorList from './tutorList.jsx'
-import axios from 'axios'
+import { Link } from 'react-router-dom' //This is weird; withRouter comes from react-router, not react-router-dom
+import { withRouter } from 'react-router'
+import store, { logout, fetchTutors, fetchteachables } from '../store'
 
 /**
  * COMPONENT
@@ -15,7 +14,7 @@ import axios from 'axios'
 
 const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
-  //console.log(" come here------->", isLoggedIn)
+  console.log("children=====>", children)
   return (
     <div>
       <h1>PEER TUTORING WHATWHAT</h1>
@@ -31,19 +30,13 @@ const Main = (props) => {
               {/* The navbar will show these links before you log in */}
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
+              <Link to="/tutors">Tutors</Link>
+              <Link to="/shoppingcart">Cart</Link>
             </div>
         }
       </nav>
       <hr />
       {children}
-      <TutorList
-        isLoggedIn={isLoggedIn}
-        gettingTutors={() => {
-          store.dispatch(fetchTutors())
-        }}
-        gettingTeachables={() => {
-          store.dispatch(fetchteachables())
-        }} />
     </div>
   )
 }

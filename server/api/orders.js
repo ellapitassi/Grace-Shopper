@@ -20,7 +20,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
     //buyer, tutor, cost, sessionTime, duration, rating, comments
   const info = req.body;
-  Order.create(info,
+  Orders.create(info,
     {
         include: [{ all: true }]
     }).then(order => res.json(order))

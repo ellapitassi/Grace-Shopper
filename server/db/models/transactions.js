@@ -20,15 +20,19 @@ const Transactions = db.define('transactions', {
 })
 
 Transactions.addHook('beforeSave', 'generateCost', (transaction) =>
-  Teachables.findById(transaction.teachableId)
-  .then(res => {
-    let pr = res.price;
-    transaction.cost = pr * transaction.duration;
-    return Orders.findById(transaction.orderId)
-    .then(foundOrder => {
-      foundOrder.update({subtotal: foundOrder.subtotal + transaction.cost});
+{
+  //console.log("transaction", transaction);
+  Teachables.findById(transaction.teachableId, { include: [{ all: true }] })
+    .then(res => {
+      //console.log("res===>", res)
+      let pr = res.price;
+      transaction.cost = pr * transaction.duration;
+      return Orders.findById(transaction.orderId)
+        .then(foundOrder => {
+          foundOrder.update({ subtotal: foundOrder.subtotal + transaction.cost });
+        })
     })
-}))
+})
 
 
 module.exports = Transactions
