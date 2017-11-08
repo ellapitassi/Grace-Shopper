@@ -23,8 +23,8 @@ grandTotal: {
 })
 
 Orders.cartForUser = function (user) {
-    if (!user) return Orders.create()
-    return Orders.findOrCreate({where: {buyerId: user.id}},{ include: [{all: true}]})
+  if (!user) return Orders.create()
+  return Orders.findOrCreate({where: { buyerId: user.id }, include: [{ all: true }] })
             .then(([cart, _]) => cart)
 }
 
