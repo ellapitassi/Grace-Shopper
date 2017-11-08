@@ -9,7 +9,7 @@
   "scripts": {
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
-    "deploy": "script/deploy",
+    "deploy": "server/db/deploy",
     "lint": "eslint ./ --ignore-path .gitignore",
     "seed": "node script/seed.js",
     "start": "nodemon server",
