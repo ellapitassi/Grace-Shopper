@@ -9032,6 +9032,7 @@ var Routes = function (_Component) {
           _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _components.UserHome }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/login', component: _components.Login }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/signup', component: _components.Signup }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/shoppingcart', component: _components.Cart }),
