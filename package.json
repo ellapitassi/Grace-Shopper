@@ -9,9 +9,9 @@
   "scripts": {
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
-    "deploy": "server/db/deploy",
+    "deploy": "script/deploy",
     "lint": "eslint ./ --ignore-path .gitignore",
-    "seed": "node script/seed.js",
+    "seed": "node server/db/seed.js",
     "start": "nodemon server",
     "start-dev": "npm run build-client-watch & npm run start-server",
     "start-server": "NODE_ENV='development' nodemon server -e html,js,scss --ignore public",
