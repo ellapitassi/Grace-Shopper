@@ -5,7 +5,7 @@ const db = require('../db')
 const User = db.define('user', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
   },
   img: {
     type: Sequelize.STRING,
