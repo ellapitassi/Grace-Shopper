@@ -11196,8 +11196,8 @@ UserHome.propTypes = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var PAYMENT_SERVER_URL = process.env.NODE_ENV === 'production' ? 'http://myapidomain.com' //Replace with Heroku
-: 'http://localhost:8080';
+var PAYMENT_SERVER_URL = process.env.NODE_ENV === 'production' ? 'https://warm-spire-59777.herokuapp.com/api/stripe' //Replace with Heroku
+: 'http://localhost:8080/api/stripe';
 
 exports.default = PAYMENT_SERVER_URL;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))

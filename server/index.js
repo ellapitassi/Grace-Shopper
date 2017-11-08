@@ -57,8 +57,7 @@ const createApp = () => {
   app.use(passport.session())
 
   //Config files for Stripe
-  configureServer(app);
-  paymentApi(app);
+  configureServer(app);  
 
   // auth and api routes
   app.use('/auth', require('./auth'))

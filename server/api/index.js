@@ -8,6 +8,8 @@ router.use('/teachables', require('./teachables'))
 router.use('/orders', require('./orders'))
 router.use('/stripe', require('./payment'))
 
+
+
 router.use((req, res, next) => {
   const error = new Error('Not Found')
   error.status = 404

@@ -1,8 +1,7 @@
 const FRONTEND_DEV_URLS = ['http://localhost:3000'];
 
 const FRONTEND_PROD_URLS = [
-  'https://www.yourdomain.com',
-  'https://yourdomain.com'
+  'https://warm-spire-59777.herokuapp.com'
 ];
 
 module.exports = process.env.NODE_ENV === 'production'
