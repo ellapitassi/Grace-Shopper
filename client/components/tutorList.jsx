@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { NavLink, Link } from 'react-router-dom';
-import { fetchTeachablesById } from '../store'
+import { fetchTeachablesById, addToCartThunk } from '../store';
 
 const Selection = (props) => {
+    console.log("------>",props.addToCartButton)
 
        let teachables;
        if (props.teachables) {
@@ -12,19 +13,32 @@ const Selection = (props) => {
             teachables = [{name: ''}];
         }
 
-    return (<div>
-     <select className="select-tutor">
+    return (
+        <form onSubmit={(evt)=> { 
+            //gather datas to pass in the function
+            //call action
+            evt.preventDefault()
+            let teachableId = evt.target.teachableSelector.value
+            let tutorId = props.tutorId
+            console.log('--teachableId ->', evt.target.teachableSelector.value)
+            console.log('--tutorId ->', props.tutorId)
+
+            props.addToCartButton({teachableId, tutorId})
+            
+
+         }}>
+     <select name="teachableSelector" className="select-tutor" >
 
         {
            teachables.map(ele => (
-            <option value={ele.name} key={ele.id}>{ele.name + ' $' + ele.price + '.00'}</option>
+            <option value={ele.id} key={ele.id}>{ele.name + ' $' + ele.price + '.00'}</option>
             ))
         }
         </select>
-    <button>
+    <button type='submit'>
         Add To Cart
     </button>
-</div>)
+</form>)
 }
 
 export class TutorList extends Component {
@@ -39,7 +53,7 @@ export class TutorList extends Component {
 
     render() {
 
-        console.log('--->>state', this.props)
+        //console.log('--->>state', this.props)
 
         const isLoggedIn = this.props.isLoggedIn;
         let tutors = [];
@@ -65,7 +79,7 @@ export class TutorList extends Component {
                             <p>Rating TBD</p>
 
                             {isLoggedIn ?
-                                    <Selection teachables={tutor.teachables} />
+                                    <Selection teachables={tutor.teachables} addToCartButton={this.props.onAddToCartClick} tutorId={tutor.id} />
                             : ''}
                         </div>
                     ))
@@ -83,4 +97,13 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, /*mapDispatchToProps*/)(TutorList);
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddToCartClick: (transaction) => {
+            console.log("HERERER")
+            dispatch(addToCartThunk(transaction))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TutorList);

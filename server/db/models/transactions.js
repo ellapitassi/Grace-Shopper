@@ -5,7 +5,7 @@ const Orders = require('./orders')
 
 const Transactions = db.define('transactions', {
   cost: {
-      type: Sequelize.FLOAT //TODO: Change Decimals to floats of pennies; better for math
+      type: Sequelize.FLOAT
   },
   sessionTime: {
     type: Sequelize.DATE,
@@ -20,16 +20,19 @@ const Transactions = db.define('transactions', {
 })
 
 Transactions.addHook('beforeSave', 'generateCost', (transaction) =>
-  Teachables.findById(transaction.teachableId)
-  .then(res => {
-    let pr = res.price;
-    transaction.cost = pr * transaction.duration;
-    return Orders.findById(transaction.orderId)
-    .then(foundOrder => {
-      //foundOrder.subtotal = "found "+foundOrder; //+ transaction.cost;
-      foundOrder.update({subtotal:foundOrder.subtotal+transaction.cost});
+{
+  //console.log("transaction", transaction);
+  Teachables.findById(transaction.teachableId, { include: [{ all: true }] })
+    .then(res => {
+      //console.log("res===>", res)
+      let pr = res.price;
+      transaction.cost = pr * transaction.duration;
+      return Orders.findById(transaction.orderId)
+        .then(foundOrder => {
+          foundOrder.update({ subtotal: foundOrder.subtotal + transaction.cost });
+        })
     })
-}))
+})
 
 
 module.exports = Transactions

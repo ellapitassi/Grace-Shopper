@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const Orders = require('../db/models/orders.js')
+const Transactions = require('../db/models/transactions.js')
+
 
 router.use(withCart);
 
@@ -43,9 +45,16 @@ function withCart(req, res, next) {
 router.get('/', (req, res) => res.send(req.cart))
 
 router.put('/', (req, res, next) => {
-    req.cart.addTransactions(req.body)
-        .then(() => res.redirect('/api/cart'))
+    console.log("req.body---->",req.body) //req.body must include tutorId, teachableId, and orderId
+    
+    Transactions.create(Object.assign({}, req.body, {orderId: req.cart.id}))
+    .then(modelzz => {
+        console.log("createdTransaction",modelzz.id,modelzz.cost,modelzz.tutorId,modelzz.teachableId)
+        req.cart.addTransactions(modelzz)
+    })
+        .then(() => res.send()) //res.redirect('/api/cart'))
         .catch(next);
+        
 })
 
 module.exports = router
